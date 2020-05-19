@@ -6,6 +6,7 @@
  * Time: 18:47
  */
 require_once 'constant.php';
+require_once 'CutImage.php';
 
 ?>
 <!DOCTYPE html>
@@ -15,13 +16,7 @@ require_once 'constant.php';
     <title>Player</title>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
-   <!-- <script type="text/javascript" src="/js/custom.js"></script>-->
-
-
-
-    <style>
-
-    </style>
+    <script type="text/javascript" src="js/jquery.imgareaselect.js"></script>
 </head>
 <body>
 
@@ -44,6 +39,7 @@ require_once 'constant.php';
          data.append('uploadSubmit', 1);
          data.append('file', file);
 
+        // загружаем изображение
          $.ajax({
              type: "POST",
              url: "upload.php",
@@ -52,10 +48,25 @@ require_once 'constant.php';
              contentType: false,
              success: function (data) {
                  $('#imgBox').html(data);
+
+                 // обрезаем изображение
+                 $.ajax({
+                     type:'POST',
+                     url:'chimg.php',
+                     data:{'src': $('img').attr('src')},
+                     success: function (data) {
+                         $('img').remove();
+                         $('#imgBox').html(data);
+                         console.log('update');
+                     }
+                 });
              }
+
          });
     });
 
+
 </script>
+
 </body>
 </html>
