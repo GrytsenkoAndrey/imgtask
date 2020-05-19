@@ -113,7 +113,7 @@ class CutImage
         # save file
         $this->imageByType($nfile, $name . '.' . $this->type);
 
-        return $name . '.' . $this->type;
+        return "<img src='" . $name . '.' . $this->type . "' alt='img'>";
     }
 
     public function imageByType($newFileResource, $fileName)
