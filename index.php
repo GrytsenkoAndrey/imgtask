@@ -20,7 +20,7 @@ require_once 'CutImage.php';
 </head>
 <body>
 
-<input type="file" name="file" id="file">
+<input type="file" name="file" id="file" accept="<?= implode(',', FILE_TYPES) ?>">
 
 <div id="loadStatus"></div>
 <div id="imgBox"></div>
