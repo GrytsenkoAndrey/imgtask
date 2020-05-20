@@ -16,18 +16,24 @@ require_once 'CutImage.php';
     <title>Player</title>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/jquery.imgareaselect.js"></script>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
 
+<div id="input">
 <input type="file" name="file" id="file" accept="<?= implode(',', FILE_TYPES) ?>">
+</div>
 
-<div id="loadStatus"></div>
 <div id="imgBox"></div>
 
 
 <script>
     $('#file').on('change', function(){
+
+        if ($('img') != 'undefined') {
+            $('img').remove();
+        }
+
         file = this.files[0];
         // ничего не делаем если files пустой
         if (typeof file == 'undefined') {
@@ -49,7 +55,6 @@ require_once 'CutImage.php';
              success: function (data) {
                  $('#imgBox').html(data);
 
-                 // обрезаем изображение
                  $.ajax({
                      type:'POST',
                      url:'chimg.php',
@@ -57,11 +62,10 @@ require_once 'CutImage.php';
                      success: function (data) {
                          $('img').remove();
                          $('#imgBox').html(data);
-                         console.log('update');
+                         $('#info').css('display', 'none');
                      }
                  });
              }
-
          });
     });
 

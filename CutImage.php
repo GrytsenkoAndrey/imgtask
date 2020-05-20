@@ -51,6 +51,9 @@ class CutImage
     {
         $this->file = $filename;
         $this->params = $params;
+
+        $this->getMimeType();
+        $this->getImageCreate();
     }
 
     /**
@@ -100,12 +103,11 @@ class CutImage
         # new size
         $width = $arrSize[0] + 70;
         $height = $arrSize[1];
-        $this->getMimeType();
-        $this->getImageCreate();
         # new file resource
         $nfile = imagecreate($width, $height);
         # background
-        imagecolorallocate($this->image, 255, 255, 255);
+        $white = imagecolorallocatealpha($nfile, 255, 255, 255, 110);
+        imagefilledrectangle($nfile, 0, 0, $width, $height, $white);
         # copy & resize
         foreach($this->params as $param) {
             imagecopyresampled($nfile, $this->image, $param[0], $param[1], $param[0]-10, $param[1], $param[2], $param[3], $param[2], $param[3]);
